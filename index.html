@@ -1,0 +1,138 @@
+<style>
+
+
+@font-face {
+  font-family: 'arcade';
+  src: URL('media/ARCADECLASSIC.TTF') format('truetype');
+}
+
+body {
+	font-family: arcade;
+	
+
+}
+
+#world {
+	width: 1200px;
+	height:800px;
+	background: url('media/wall.jpg');
+	background-size: 100px;
+	position: absolute;
+	overflow: hidden;
+}
+
+.road {
+	position: absolute;
+	background: url('media/road.jpg');
+	background-size: 500px;
+	/*border: 1px solid white;*/
+	opacity: 1;
+}
+
+.playa {
+	position: absolute;
+	width:50px;height: 50px;
+	left:0px;/*top:45px;*/
+	background: black;
+	transition: 0.1s all linear;
+	transform-origin: 20% 50%;
+}
+
+.playa img{
+	height: 100%;
+	margin-left: -50%;
+	transform: rotate(180deg);
+	opacity:1;
+}
+
+#game-over{
+	width:400px;height:400px;
+	left:400px;top:200px;
+	background: black;
+	color:white;
+	position: absolute;
+	font-size: 6em;
+	text-align: center;
+	display: none;
+}
+
+#text-box{
+	width:400px;height:400px;
+	left:400px;top:200px;
+	background: black;
+	color:white;
+	position: absolute;
+	font-size: 6em;
+	text-align: center;
+	display: block;	
+	opacity: 0.8;
+}	
+
+</style>
+
+
+<div id='world'> 
+
+<!-- <div class='road' style='width:100px;height:150px;left:0px;top:0px;'></div>
+<div class='road' style='width:250px;height:700px;left:50px;top:0px;'></div>
+<div class='road' style='width:450px;height:200px;left:250px;top:500px;'></div>
+<div class='road' style='width:200px;height:500px;left:650;top:200px;'></div>
+<div class='road' style='width:460px;height:200px;left:800;top:200px;'></div> -->
+
+
+<div class='playa' id='player'>
+	<img src='media/car1.webp' />
+</div>
+<div id='text-box'>Press any key to start </div>
+</div>
+
+<audio id='radio'></audio>
+<audio id='sfx-engine' loop='loop'></audio>
+<audio id='sfx2'></audio>
+<audio id='sfx3'></audio>
+
+<script src='logic.js'> </script>
+<script src='audio.js'></script>
+<script src='generateMap.js'></script>
+<script>
+
+	var map = new GenerateMap()
+
+map.generateMap()
+
+console.log(map.worldMapArray)
+	var go = new game(map.worldMapArray)
+	var sf = new SF()
+
+
+
+
+document.addEventListener("keydown", ()=>{
+	go.start()
+}, { once: true });
+
+
+
+
+
+	document.addEventListener('keydown', (e)=>{
+			switch (e.keyCode){
+				case 39:
+					go.dirSet = 'right'
+					e.preventDefault()
+					break;
+				case 40:
+					go.dirSet = 'down'
+					e.preventDefault()
+					break;
+				case 37:
+					go.dirSet = 'left'
+					e.preventDefault()
+					break;
+				case 38: 
+					go.dirSet = 'up'
+					e.preventDefault()
+					break;
+			}
+	})
+</script>
